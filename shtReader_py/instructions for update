@@ -1,0 +1,5 @@
+0) increment version.
+1) enter D:\code\shtRipper_cpp\python
+2) clear build, dist, egg folders
+3) python setup.py sdist bdist_wheel
+4) twine upload dist/*
