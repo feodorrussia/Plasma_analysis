@@ -2,3 +2,4 @@
 /data/dbs
 /data/sht/G-ELM
 /data/sht/NG-ELM
+*.pyc
