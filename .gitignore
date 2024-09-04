@@ -3,3 +3,7 @@
 /data/sht/G-ELM
 /data/sht/NG-ELM
 *.pyc
+.ipynb_checkpoints/Marking system-checkpoint.ipynb
+shtReader_py/shtRipper/__pycache__/__init__.cpython-311.pyc
+shtReader_py/shtRipper/__pycache__/shtRipper_entry.cpython-311.pyc
+*.pyc
