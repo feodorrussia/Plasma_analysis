@@ -1,6 +1,8 @@
 import numpy as np
 from scipy import signal
 import copy
+import sys
+import os
 
 from source.Files_operating import read_sht_data
 
@@ -140,7 +142,6 @@ def get_boarders_d2(data:np.array, diff_data: np.array, s_i: int, scale=1.5):
                 return Slice(scale_slice.l, peaks_ind[0])
             else:
                 return Slice(0, peaks_ind[0])
-
     return Slice(peaks_ind[0], peaks_ind[-1])
 
 def proc_boarders(data: np.array, data_diff: np.array, start_ind: int, scale=1.5) -> Slice:
@@ -167,8 +168,8 @@ def proc_boarders(data: np.array, data_diff: np.array, start_ind: int, scale=1.5
     # add checking diff on right & left boarder (cut on D2 peaks) - done
     # add dtw classification (None | ELM | LSO)
 
-    print(res_slice.l, res_slice.r, end=" ")
-    print(abs(data_diff[res_slice.l:res_slice.r].max() - np.quantile(data_diff, 0.7)), data_diff.std())
+    # print(res_slice.l, res_slice.r, end=" ")
+    # print(abs(data_diff[res_slice.l:res_slice.r].max() - np.quantile(data_diff, 0.7)), data_diff.std())
     
     return res_slice
 
@@ -225,7 +226,7 @@ def proc_slices(mark_data: np.array, data: np.array, data_diff: np.array, meta: 
                 proc_slice.copy(cur_slice)
     
         cur_slice.step()
-    print(c)
+    # print(c)
 
     return res_mark
 
@@ -251,13 +252,15 @@ def get_slices(mark_data: np.array):
     return slices_list
 
 
-def init_app(F_ID, dir_path, report_filename=""):
-    # D:/Edu/Lab/Projects/Plasma_analysis/data/sht/G-ELM/ | C:/Users/f.belous/Work/Projects/Plasma_analysis/data/sht/G-ELM/
-    
-    df = read_sht_data(f'sht{F_ID}', dir_path)
+def init_app(filename, dir_path, report_filename=""):    
+    df = read_sht_data(filename, dir_path)
     df = df.rename(columns={"ch1": "d_alpha"})
-    df["sxr"] = read_sht_data(f'sht{F_ID}', dir_path, data_name="SXR 50 mkm").ch1
-    df.describe()
+    # logg 1
+    print("-", end="")
+    df["sxr"] = read_sht_data(filename, dir_path, data_name="SXR 50 mkm").ch1
+    # logg 2
+    print("-", end="")
+    
     
     d_alpha = df.d_alpha.to_numpy()
     sxr = df.sxr.to_numpy()
@@ -268,6 +271,8 @@ def init_app(F_ID, dir_path, report_filename=""):
     b, a = signal.butter(5, 0.05)
     d_alpha_f = signal.filtfilt(b, a, d_alpha_d1)
     sxr_f = signal.filtfilt(b, a, sxr_d1)
+    # logg 3
+    print("-", end="")
     
     meta_da = Signal_meta(chanel_name="da", processing_flag=True)
     meta_da.set_statistics(d_alpha, d_alpha_f, 0.7, 0.7, d_std_bottom_edge=1.5, d_std_top_edge=2.7)
@@ -275,24 +280,31 @@ def init_app(F_ID, dir_path, report_filename=""):
     
     meta_sxr = Signal_meta(chanel_name="sxr", processing_flag=True)
     meta_sxr.set_statistics(sxr, sxr_f, 0.8, 0.8, d_std_bottom_edge=7.0, d_std_top_edge=15.0)
-    meta_sxr.set_edges(length_edge=10, distance_edge=30, scale=0)
+    meta_sxr.set_edges(length_edge=10, distance_edge=30, scale=0, step_out=20)
     
     mark_data = np.zeros(d_alpha_f.shape)
     mark_data[abs(d_alpha_f - meta_da.d_q) > meta_da.d_std * meta_da.d_std_bottom] = 1
     mark_d_alpha = proc_slices(mark_data, d_alpha, d_alpha_f, meta_da)
+    # logg 4
+    print("-", end="")
     
     mark_data = np.zeros(d_alpha_f.shape)
     mark_data[abs(sxr_f - meta_sxr.d_q) > meta_sxr.d_std * meta_sxr.d_std_bottom] = 1
     mark_sxr = proc_slices(mark_data, sxr, sxr_f, meta_sxr)
+    # logg 5
+    print("-", end="")
     
     sxr_slices = get_slices(mark_sxr)
     deltas = np.zeros(len(sxr_slices))
+    # logg 6
+    print("-", end="")
 
     report_lines = []
     
-    report_lines.append(f"Signal #{F_ID}")
-    report_lines.append(f"SXR falls: {len(sxr_slices)}")
-    report_lines.append("-----")
+    report_lines.append("\n----------------\n")
+    report_lines.append(f"Signal {filename}\n")
+    report_lines.append(f"SXR falls: {len(sxr_slices)}\n")
+    report_lines.append("-----\n")
     
     for sl_i in range(len(sxr_slices)):
         l_shift, r_shift = 100, 1500
@@ -300,7 +312,7 @@ def init_app(F_ID, dir_path, report_filename=""):
     
         if len(da_slices) == 0:
             deltas[sl_i] = np.nan
-            report_lines.append(f"SXR fall - {((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3} ms -- No ELM on D-alpha")
+            report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- No ELM on D-alpha\n")
         else:
             ind = 0
             while sxr_slices[sl_i].r - (da_slices[ind].r + sxr_slices[sl_i].l - l_shift) > 0 and ind + 1 < len(da_slices):
@@ -310,22 +322,35 @@ def init_app(F_ID, dir_path, report_filename=""):
             
             if deltas[sl_i] > 0.4:
                 deltas[sl_i] = np.nan
-                report_lines.append(f"SXR fall - {((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3} ms -- No ELM on D-alpha")
+                report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- No ELM on D-alpha\n")
                 continue
-            report_lines.append(f"SXR fall - {((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3} ms -- ELM on D-alpha: delta = {deltas[sl_i]} ms")
+            report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- ELM on D-alpha: delta = {deltas[sl_i]:3.3f} ms\n")
+    # logg 8
+    print("-", end="")
     
     
-    report_lines.append("-----")
-    report_lines.append(f"Deltas info: mean = {np.nanmean(deltas)} ms, std = {np.nanstd(deltas)}")
-    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-0.5 ms; 1 ms): {np.count_nonzero(np.isnan(deltas))}")    
+    report_lines.append("-----\n")
+    report_lines.append(f"Deltas info: mean = {np.nanmean(deltas):.3f} ms, std = {np.nanstd(deltas):.3f}\n")
+    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas))}\n")
+    # logg 9
+    print("-", end="")
 
-    with open(dir_path+report_filename,"a") as file:
+    report_path = report_filename if "/" in report_filename or "\\" in report_filename else dir_path + report_filename
+
+    with open(report_path, "a") as file:
         file.writelines(report_lines)
+
+    # logg 10
+    print("-|", end="")
+    print(f"- w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas))} (m={np.nanmean(deltas):.3f}, std={np.nanstd(deltas):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas))}")
 
 if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     # get args from CL
-    print("Sys args (SHT file ID | full filepath | name of the report file):\n", sys.argv)
-    init_app(sys.argv[1], sys.argv[2], sys.argv[3])
+    print("Sys args (dir filepath | name of the report file):\n", sys.argv)
+    print("\n----------------")
+    for f_name in os.listdir(sys.argv[1]):
+        print(f"Process {f_name} - |", end="")
+        init_app(f_name[:-4], sys.argv[1], sys.argv[2])
 
 else:
     print("Program is supposed to run out from command line.")
