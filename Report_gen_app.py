@@ -131,7 +131,7 @@ def get_boarders_d2(data:np.array, diff_data: np.array, s_i: int, scale=1.5):
     elif len(peaks_ind) == 1:
         scale_slice = get_boarders(data, scale=scale)
         if peaks_ind[0] < diff_data.shape[0] - peaks_ind[0]:
-            if peaks_ind[0] - scale_slice.r > 0:
+            if peaks_ind[0] - scale_slice.r < 0:
                 return Slice(peaks_ind[0], scale_slice.r)
             else:
                 return Slice(peaks_ind[0], diff_data.shape[0])
@@ -252,8 +252,6 @@ def get_slices(mark_data: np.array):
 
 
 def init_app(F_ID, dir_path, report_filename=""):
-    # F_ID = 44350
-    # dir_path = "C:/Users/f.belous/Work/Projects/Plasma_analysis/data/sht/G-ELM/"  
     # D:/Edu/Lab/Projects/Plasma_analysis/data/sht/G-ELM/ | C:/Users/f.belous/Work/Projects/Plasma_analysis/data/sht/G-ELM/
     
     df = read_sht_data(f'sht{F_ID}', dir_path)
