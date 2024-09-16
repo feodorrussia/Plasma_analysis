@@ -60,12 +60,15 @@ class Slice:
     def is_null(self) -> bool:
         return self.l == self.r
 
+    def __repr__(self):
+        return f"({self.l}, {self.r})"
+
 
 class Signal_meta:
     def __init__(self, chanel_name="da", processing_flag=False, 
                  quantile_edge=0.0, std_edge=1.0, 
                  length_edge=10, distance_edge=10, scale=1.5, step_out=10, 
-                 std_bottom_edge=0, std_top_edge=1, d_std_bottom_edge=3, d_std_top_edge=6):
+                 std_bottom_edge=0, std_top_edge=1, d_std_bottom_edge=3, d_std_top_edge=6, amplitude_ratio=0.5):
         self.name = chanel_name
         self.proc_fl = processing_flag
         
@@ -84,16 +87,27 @@ class Signal_meta:
         self.std_bottom = std_bottom_edge
         self.d_std_top = d_std_top_edge
         self.d_std_bottom = d_std_bottom_edge
+
+        self.max_min_ratio = amplitude_ratio
         
-    def set_statistics(self, data: np.array, data_diff: np.array, percentile: float, d_percentile: float, std_bottom_edge=0, std_top_edge=1, d_std_bottom_edge=3, d_std_top_edge=6):
+    def set_statistics(self, data: np.array, data_diff: np.array, percentile: float, d_percentile: float, std_bottom_edge=0, std_top_edge=1, d_std_bottom_edge=3, d_std_top_edge=6, amplitude_ratio=0.5):
         self.q = np.quantile(data, percentile)
         self.std = data.std()
         self.std_top = std_top_edge
         self.std_bottom = std_bottom_edge
+        
         self.d_q = np.quantile(data_diff, percentile)
         self.d_std = data_diff.std()
-        self.d_std_top = d_std_top_edge
-        self.d_std_bottom = d_std_bottom_edge
+        if self.name == "sxr":
+            a = 10.5
+            b = -850
+            self.d_std_top = d_std_top_edge / d_std_bottom_edge * a * np.exp(b * self.d_std)
+            self.d_std_bottom = a * np.exp(b * self.d_std)
+        else:
+            self.d_std_top = d_std_top_edge
+            self.d_std_bottom = d_std_bottom_edge            
+
+        self.max_min_ratio = amplitude_ratio
 
     def set_edges(self, length_edge=10, distance_edge=10, scale=1.5, step_out=10):
         self.len_edge = length_edge
@@ -130,14 +144,15 @@ def get_boarders_d2(data:np.array, diff_data: np.array, s_i: int, scale=1.5):
 
     if len(peaks_ind) == 0:
         return Slice(0, diff_data.shape[0])
-    elif len(peaks_ind) == 1:
+    if len(peaks_ind) == 1:
         scale_slice = get_boarders(data, scale=scale)
+        # print(scale_slice)
         if peaks_ind[0] < diff_data.shape[0] - peaks_ind[0]:
             if peaks_ind[0] - scale_slice.r < 0:
                 return Slice(peaks_ind[0], scale_slice.r)
             else:
                 return Slice(peaks_ind[0], diff_data.shape[0])
-        elif peaks_ind[0] > diff_data.shape[0] - peaks_ind[0]:
+        else:
             if peaks_ind[0] - scale_slice.l > 0:
                 return Slice(scale_slice.l, peaks_ind[0])
             else:
@@ -208,7 +223,7 @@ def proc_slices(mark_data: np.array, data: np.array, data_diff: np.array, meta: 
                    abs(data_diff[proc_slice.l:proc_slice.r].min() - meta.d_q) < meta.d_std_top * meta.d_std:
                     proc_slice.set_mark(0)
 
-                if meta.name == "sxr" and abs(data_diff[proc_slice.l:proc_slice.r].max() - meta.d_q) < meta.d_std:
+                if meta.name == "sxr" and abs(data_diff[proc_slice.l:proc_slice.r].max() / data_diff[proc_slice.l:proc_slice.r].min()) < meta.max_min_ratio:
                     proc_slice.set_mark(1)
 
                 if meta.name == "sxr" and abs(data_diff[proc_slice.l:proc_slice.r].max() - meta.d_q) > meta.d_std_top * meta.d_std:
@@ -305,9 +320,9 @@ def init_app(filename, dir_path, report_filename=""):
     report_lines.append(f"Signal {filename}\n")
     report_lines.append(f"SXR falls: {len(sxr_slices)}\n")
     report_lines.append("-----\n")
+    l_shift, r_shift = 100, 1500
     
     for sl_i in range(len(sxr_slices)):
-        l_shift, r_shift = 100, 1500
         da_slices = get_slices(mark_d_alpha[min(sxr_slices[sl_i].l - l_shift, mark_d_alpha.shape[0]): min(sxr_slices[sl_i].r + r_shift, mark_d_alpha.shape[0])])
     
         if len(da_slices) == 0:
@@ -332,6 +347,8 @@ def init_app(filename, dir_path, report_filename=""):
     report_lines.append("-----\n")
     report_lines.append(f"Deltas info: mean = {np.nanmean(deltas):.3f} ms, std = {np.nanstd(deltas):.3f}\n")
     report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas))}\n")
+    report_lines.append(f"SXR info: diff_quantile = {meta_sxr.d_q:.6f}, diff_std = {meta_sxr.d_std:.6f}\n")
+    report_lines.append(f"SXR diff_std_top_edge: {meta_sxr.d_std_bottom:.3f} (approximate w/ a*exp^b)\n")
     # logg 9
     print("-", end="")
 
@@ -342,7 +359,8 @@ def init_app(filename, dir_path, report_filename=""):
 
     # logg 10
     print("-|", end="")
-    print(f"- w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas))} (m={np.nanmean(deltas):.3f}, std={np.nanstd(deltas):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas))}")
+    print(f" - signal (sxr: d_q={meta_sxr.d_q:.6f}, d_std={meta_sxr.d_std:.6f}, d_std_top_edge={meta_sxr.d_std_bottom:.3f})", end="")
+    print(f" - w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas))} (m={np.nanmean(deltas):.3f}, std={np.nanstd(deltas):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas))}")
 
 if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     # get args from CL
