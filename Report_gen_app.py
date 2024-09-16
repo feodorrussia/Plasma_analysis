@@ -225,6 +225,8 @@ def proc_slices(mark_data: np.array, data: np.array, data_diff: np.array, meta: 
 
                 if meta.name == "sxr" and abs(data_diff[proc_slice.l:proc_slice.r].max() / data_diff[proc_slice.l:proc_slice.r].min()) < meta.max_min_ratio:
                     proc_slice.set_mark(1)
+                else:
+                    proc_slice.set_mark(0)
 
                 if meta.name == "sxr" and abs(data_diff[proc_slice.l:proc_slice.r].max() - meta.d_q) > meta.d_std_top * meta.d_std:
                     proc_slice.set_mark(0)
