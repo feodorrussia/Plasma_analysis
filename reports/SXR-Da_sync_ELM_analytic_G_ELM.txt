@@ -1,0 +1,611 @@
+
+----------------
+Signal sht44168
+SXR falls: 28
+-----
+SXR fall - 128.229 ms -- ELM on D-alpha: delta = 0.088 ms
+SXR fall - 165.281 ms -- ELM on D-alpha: delta = 0.112 ms
+SXR fall - 169.416 ms -- ELM on D-alpha: delta = 0.084 ms
+SXR fall - 172.652 ms -- ELM on D-alpha: delta = 0.072 ms
+SXR fall - 176.724 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 180.623 ms -- ELM on D-alpha: delta = 0.092 ms
+SXR fall - 183.597 ms -- ELM on D-alpha: delta = 0.393 ms
+SXR fall - 186.915 ms -- ELM on D-alpha: delta = 0.052 ms
+SXR fall - 190.389 ms -- ELM on D-alpha: delta = -0.082 ms
+SXR fall - 192.671 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 196.251 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 198.577 ms -- ELM on D-alpha: delta = 0.049 ms
+SXR fall - 201.195 ms -- ELM on D-alpha: delta = 0.075 ms
+SXR fall - 203.893 ms -- ELM on D-alpha: delta = 0.062 ms
+SXR fall - 206.489 ms -- ELM on D-alpha: delta = -0.005 ms
+SXR fall - 208.847 ms -- ELM on D-alpha: delta = -0.054 ms
+SXR fall - 211.389 ms -- ELM on D-alpha: delta = 0.086 ms
+SXR fall - 213.781 ms -- ELM on D-alpha: delta = 0.053 ms
+SXR fall - 215.852 ms -- ELM on D-alpha: delta = 0.044 ms
+SXR fall - 218.858 ms -- ELM on D-alpha: delta = 0.042 ms
+SXR fall - 221.291 ms -- ELM on D-alpha: delta = 0.042 ms
+SXR fall - 223.735 ms -- ELM on D-alpha: delta = 0.033 ms
+SXR fall - 226.501 ms -- ELM on D-alpha: delta = 0.022 ms
+SXR fall - 229.121 ms -- ELM on D-alpha: delta = 0.018 ms
+SXR fall - 231.393 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 234.066 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 235.829 ms -- ELM on D-alpha: delta = 0.033 ms
+SXR fall - 238.226 ms -- ELM on D-alpha: delta = 0.011 ms
+-----
+Deltas info: mean = 0.054 ms, std = 0.077
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 0
+SXR info: diff_quantile = 0.000094, diff_std = 0.001488
+SXR diff_std_top_edge: 2.965 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44170
+SXR falls: 31
+-----
+SXR fall - 171.589 ms -- ELM on D-alpha: delta = 0.069 ms
+SXR fall - 177.682 ms -- ELM on D-alpha: delta = 0.085 ms
+SXR fall - 181.020 ms -- ELM on D-alpha: delta = -0.012 ms
+SXR fall - 185.086 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 188.761 ms -- ELM on D-alpha: delta = 0.046 ms
+SXR fall - 192.638 ms -- ELM on D-alpha: delta = 0.045 ms
+SXR fall - 195.820 ms -- ELM on D-alpha: delta = 0.045 ms
+SXR fall - 199.571 ms -- ELM on D-alpha: delta = 0.077 ms
+SXR fall - 203.895 ms -- ELM on D-alpha: delta = 0.170 ms
+SXR fall - 207.698 ms -- ELM on D-alpha: delta = 0.090 ms
+SXR fall - 211.290 ms -- ELM on D-alpha: delta = -0.062 ms
+SXR fall - 215.472 ms -- ELM on D-alpha: delta = 0.042 ms
+SXR fall - 218.408 ms -- ELM on D-alpha: delta = 0.082 ms
+SXR fall - 221.734 ms -- ELM on D-alpha: delta = 0.017 ms
+SXR fall - 226.267 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 229.765 ms -- ELM on D-alpha: delta = 0.027 ms
+SXR fall - 232.302 ms -- ELM on D-alpha: delta = 0.028 ms
+SXR fall - 234.473 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 236.176 ms -- No ELM on D-alpha
+SXR fall - 237.948 ms -- ELM on D-alpha: delta = 0.023 ms
+SXR fall - 239.362 ms -- No ELM on D-alpha
+SXR fall - 240.942 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 242.335 ms -- No ELM on D-alpha
+SXR fall - 243.634 ms -- No ELM on D-alpha
+SXR fall - 244.895 ms -- No ELM on D-alpha
+SXR fall - 246.300 ms -- No ELM on D-alpha
+SXR fall - 247.368 ms -- No ELM on D-alpha
+SXR fall - 248.526 ms -- No ELM on D-alpha
+SXR fall - 249.461 ms -- No ELM on D-alpha
+SXR fall - 250.374 ms -- No ELM on D-alpha
+SXR fall - 251.379 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.044 ms, std = 0.045
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 11
+SXR info: diff_quantile = 0.000106, diff_std = 0.001591
+SXR diff_std_top_edge: 2.717 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44171
+SXR falls: 25
+-----
+SXR fall - 181.220 ms -- ELM on D-alpha: delta = 0.112 ms
+SXR fall - 185.861 ms -- No ELM on D-alpha
+SXR fall - 190.390 ms -- ELM on D-alpha: delta = 0.101 ms
+SXR fall - 194.200 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 199.231 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 203.656 ms -- ELM on D-alpha: delta = -0.086 ms
+SXR fall - 208.220 ms -- ELM on D-alpha: delta = 0.057 ms
+SXR fall - 211.481 ms -- ELM on D-alpha: delta = -0.054 ms
+SXR fall - 215.926 ms -- ELM on D-alpha: delta = 0.019 ms
+SXR fall - 221.100 ms -- ELM on D-alpha: delta = 0.024 ms
+SXR fall - 221.184 ms -- ELM on D-alpha: delta = -0.088 ms
+SXR fall - 225.542 ms -- ELM on D-alpha: delta = 0.027 ms
+SXR fall - 229.600 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 232.403 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 234.641 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 236.758 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 238.835 ms -- No ELM on D-alpha
+SXR fall - 240.682 ms -- No ELM on D-alpha
+SXR fall - 242.125 ms -- No ELM on D-alpha
+SXR fall - 243.506 ms -- No ELM on D-alpha
+SXR fall - 244.805 ms -- No ELM on D-alpha
+SXR fall - 245.991 ms -- No ELM on D-alpha
+SXR fall - 248.287 ms -- No ELM on D-alpha
+SXR fall - 249.352 ms -- No ELM on D-alpha
+SXR fall - 251.102 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.012 ms, std = 0.063
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 10
+SXR info: diff_quantile = 0.000097, diff_std = 0.001562
+SXR diff_std_top_edge: 2.784 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44172
+SXR falls: 27
+-----
+SXR fall - 133.692 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 177.185 ms -- ELM on D-alpha: delta = 0.037 ms
+SXR fall - 177.320 ms -- No ELM on D-alpha
+SXR fall - 182.063 ms -- ELM on D-alpha: delta = 0.013 ms
+SXR fall - 187.429 ms -- ELM on D-alpha: delta = 0.074 ms
+SXR fall - 192.312 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 196.904 ms -- ELM on D-alpha: delta = 0.079 ms
+SXR fall - 201.213 ms -- ELM on D-alpha: delta = 0.094 ms
+SXR fall - 205.731 ms -- ELM on D-alpha: delta = 0.037 ms
+SXR fall - 210.336 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 215.255 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 219.901 ms -- ELM on D-alpha: delta = 0.044 ms
+SXR fall - 224.182 ms -- ELM on D-alpha: delta = 0.049 ms
+SXR fall - 228.275 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 231.736 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 234.585 ms -- ELM on D-alpha: delta = 0.016 ms
+SXR fall - 236.801 ms -- ELM on D-alpha: delta = 0.019 ms
+SXR fall - 238.570 ms -- No ELM on D-alpha
+SXR fall - 240.614 ms -- ELM on D-alpha: delta = 0.012 ms
+SXR fall - 242.123 ms -- ELM on D-alpha: delta = 0.016 ms
+SXR fall - 243.749 ms -- No ELM on D-alpha
+SXR fall - 245.084 ms -- No ELM on D-alpha
+SXR fall - 246.444 ms -- No ELM on D-alpha
+SXR fall - 247.591 ms -- No ELM on D-alpha
+SXR fall - 248.815 ms -- No ELM on D-alpha
+SXR fall - 251.854 ms -- No ELM on D-alpha
+SXR fall - 255.022 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.033 ms, std = 0.040
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 9
+SXR info: diff_quantile = 0.000105, diff_std = 0.001589
+SXR diff_std_top_edge: 2.720 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44173
+SXR falls: 26
+-----
+SXR fall - 178.177 ms -- ELM on D-alpha: delta = -0.041 ms
+SXR fall - 184.479 ms -- ELM on D-alpha: delta = 0.061 ms
+SXR fall - 189.900 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 194.773 ms -- ELM on D-alpha: delta = -0.004 ms
+SXR fall - 199.842 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 204.917 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 209.475 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 214.113 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 218.714 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 223.123 ms -- ELM on D-alpha: delta = 0.051 ms
+SXR fall - 227.047 ms -- ELM on D-alpha: delta = 0.022 ms
+SXR fall - 230.491 ms -- ELM on D-alpha: delta = 0.034 ms
+SXR fall - 233.120 ms -- ELM on D-alpha: delta = 0.037 ms
+SXR fall - 235.311 ms -- ELM on D-alpha: delta = 0.017 ms
+SXR fall - 237.430 ms -- ELM on D-alpha: delta = 0.020 ms
+SXR fall - 239.469 ms -- No ELM on D-alpha
+SXR fall - 241.468 ms -- ELM on D-alpha: delta = 0.030 ms
+SXR fall - 243.022 ms -- No ELM on D-alpha
+SXR fall - 244.402 ms -- No ELM on D-alpha
+SXR fall - 245.577 ms -- No ELM on D-alpha
+SXR fall - 246.855 ms -- No ELM on D-alpha
+SXR fall - 248.002 ms -- No ELM on D-alpha
+SXR fall - 249.126 ms -- No ELM on D-alpha
+SXR fall - 250.152 ms -- No ELM on D-alpha
+SXR fall - 251.276 ms -- No ELM on D-alpha
+SXR fall - 253.254 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.002 ms, std = 0.054
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 10
+SXR info: diff_quantile = 0.000106, diff_std = 0.001293
+SXR diff_std_top_edge: 3.499 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44181
+SXR falls: 22
+-----
+SXR fall - 180.122 ms -- No ELM on D-alpha
+SXR fall - 183.704 ms -- ELM on D-alpha: delta = 0.283 ms
+SXR fall - 189.107 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 193.018 ms -- ELM on D-alpha: delta = 0.027 ms
+SXR fall - 195.995 ms -- No ELM on D-alpha
+SXR fall - 199.116 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 202.666 ms -- ELM on D-alpha: delta = 0.046 ms
+SXR fall - 205.400 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 208.737 ms -- ELM on D-alpha: delta = 0.061 ms
+SXR fall - 212.294 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 215.216 ms -- ELM on D-alpha: delta = 0.092 ms
+SXR fall - 218.233 ms -- ELM on D-alpha: delta = 0.068 ms
+SXR fall - 220.981 ms -- ELM on D-alpha: delta = 0.012 ms
+SXR fall - 224.215 ms -- ELM on D-alpha: delta = 0.022 ms
+SXR fall - 226.998 ms -- ELM on D-alpha: delta = 0.103 ms
+SXR fall - 229.895 ms -- ELM on D-alpha: delta = 0.024 ms
+SXR fall - 232.788 ms -- ELM on D-alpha: delta = 0.010 ms
+SXR fall - 234.811 ms -- No ELM on D-alpha
+SXR fall - 236.774 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 238.541 ms -- No ELM on D-alpha
+SXR fall - 240.364 ms -- No ELM on D-alpha
+SXR fall - 242.440 ms -- ELM on D-alpha: delta = 0.002 ms
+-----
+Deltas info: mean = 0.044 ms, std = 0.073
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 5
+SXR info: diff_quantile = 0.000087, diff_std = 0.000775
+SXR diff_std_top_edge: 5.434 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44183
+SXR falls: 24
+-----
+SXR fall - 185.519 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 189.729 ms -- ELM on D-alpha: delta = 0.060 ms
+SXR fall - 194.683 ms -- ELM on D-alpha: delta = 0.056 ms
+SXR fall - 197.857 ms -- ELM on D-alpha: delta = 0.064 ms
+SXR fall - 200.778 ms -- ELM on D-alpha: delta = 0.059 ms
+SXR fall - 203.457 ms -- ELM on D-alpha: delta = 0.091 ms
+SXR fall - 206.055 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 206.193 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 209.470 ms -- ELM on D-alpha: delta = 0.020 ms
+SXR fall - 213.137 ms -- ELM on D-alpha: delta = 0.111 ms
+SXR fall - 213.282 ms -- ELM on D-alpha: delta = -0.063 ms
+SXR fall - 216.238 ms -- No ELM on D-alpha
+SXR fall - 219.174 ms -- ELM on D-alpha: delta = 0.091 ms
+SXR fall - 222.370 ms -- ELM on D-alpha: delta = 0.044 ms
+SXR fall - 225.482 ms -- ELM on D-alpha: delta = 0.030 ms
+SXR fall - 228.730 ms -- No ELM on D-alpha
+SXR fall - 231.742 ms -- ELM on D-alpha: delta = 0.028 ms
+SXR fall - 234.183 ms -- No ELM on D-alpha
+SXR fall - 236.354 ms -- ELM on D-alpha: delta = 0.068 ms
+SXR fall - 238.921 ms -- ELM on D-alpha: delta = 0.032 ms
+SXR fall - 241.445 ms -- ELM on D-alpha: delta = 0.061 ms
+SXR fall - 243.203 ms -- No ELM on D-alpha
+SXR fall - 244.787 ms -- No ELM on D-alpha
+SXR fall - 246.701 ms -- ELM on D-alpha: delta = -0.024 ms
+-----
+Deltas info: mean = 0.036 ms, std = 0.050
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 5
+SXR info: diff_quantile = 0.000086, diff_std = 0.001207
+SXR diff_std_top_edge: 3.765 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44184
+SXR falls: 24
+-----
+SXR fall - 175.997 ms -- No ELM on D-alpha
+SXR fall - 185.781 ms -- No ELM on D-alpha
+SXR fall - 189.218 ms -- ELM on D-alpha: delta = -0.048 ms
+SXR fall - 193.059 ms -- ELM on D-alpha: delta = 0.093 ms
+SXR fall - 196.606 ms -- ELM on D-alpha: delta = 0.302 ms
+SXR fall - 199.946 ms -- ELM on D-alpha: delta = 0.071 ms
+SXR fall - 203.695 ms -- No ELM on D-alpha
+SXR fall - 208.178 ms -- ELM on D-alpha: delta = 0.021 ms
+SXR fall - 212.659 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 215.995 ms -- ELM on D-alpha: delta = 0.057 ms
+SXR fall - 219.260 ms -- ELM on D-alpha: delta = 0.028 ms
+SXR fall - 222.228 ms -- ELM on D-alpha: delta = 0.043 ms
+SXR fall - 225.097 ms -- No ELM on D-alpha
+SXR fall - 228.104 ms -- ELM on D-alpha: delta = 0.024 ms
+SXR fall - 231.114 ms -- ELM on D-alpha: delta = 0.051 ms
+SXR fall - 233.485 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 235.597 ms -- ELM on D-alpha: delta = 0.017 ms
+SXR fall - 238.028 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 240.246 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 242.022 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 243.727 ms -- No ELM on D-alpha
+SXR fall - 245.203 ms -- No ELM on D-alpha
+SXR fall - 251.355 ms -- No ELM on D-alpha
+SXR fall - 256.092 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.050 ms, std = 0.071
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 8
+SXR info: diff_quantile = 0.000092, diff_std = 0.000853
+SXR diff_std_top_edge: 5.087 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44188
+SXR falls: 5
+-----
+SXR fall - 186.299 ms -- No ELM on D-alpha
+SXR fall - 190.731 ms -- ELM on D-alpha: delta = 0.263 ms
+SXR fall - 190.846 ms -- ELM on D-alpha: delta = 0.092 ms
+SXR fall - 190.940 ms -- No ELM on D-alpha
+SXR fall - 191.060 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.177 ms, std = 0.086
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 3
+SXR info: diff_quantile = 0.000062, diff_std = 0.001119
+SXR diff_std_top_edge: 4.055 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44194
+SXR falls: 23
+-----
+SXR fall - 168.610 ms -- ELM on D-alpha: delta = 0.140 ms
+SXR fall - 176.608 ms -- ELM on D-alpha: delta = 0.050 ms
+SXR fall - 182.015 ms -- ELM on D-alpha: delta = 0.063 ms
+SXR fall - 187.013 ms -- ELM on D-alpha: delta = 0.102 ms
+SXR fall - 191.703 ms -- ELM on D-alpha: delta = 0.072 ms
+SXR fall - 196.328 ms -- ELM on D-alpha: delta = 0.036 ms
+SXR fall - 201.100 ms -- ELM on D-alpha: delta = 0.002 ms
+SXR fall - 205.237 ms -- ELM on D-alpha: delta = 0.077 ms
+SXR fall - 209.330 ms -- ELM on D-alpha: delta = 0.066 ms
+SXR fall - 213.803 ms -- ELM on D-alpha: delta = 0.090 ms
+SXR fall - 218.301 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 222.986 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 227.296 ms -- ELM on D-alpha: delta = 0.113 ms
+SXR fall - 231.593 ms -- ELM on D-alpha: delta = 0.131 ms
+SXR fall - 235.626 ms -- ELM on D-alpha: delta = 0.077 ms
+SXR fall - 239.165 ms -- No ELM on D-alpha
+SXR fall - 241.692 ms -- No ELM on D-alpha
+SXR fall - 243.836 ms -- No ELM on D-alpha
+SXR fall - 245.579 ms -- No ELM on D-alpha
+SXR fall - 247.306 ms -- ELM on D-alpha: delta = 0.011 ms
+SXR fall - 248.999 ms -- No ELM on D-alpha
+SXR fall - 250.429 ms -- No ELM on D-alpha
+SXR fall - 251.772 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.062 ms, std = 0.056
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 7
+SXR info: diff_quantile = 0.000096, diff_std = 0.001040
+SXR diff_std_top_edge: 4.337 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44198
+SXR falls: 26
+-----
+SXR fall - 162.953 ms -- ELM on D-alpha: delta = 0.092 ms
+SXR fall - 169.716 ms -- ELM on D-alpha: delta = 0.098 ms
+SXR fall - 175.255 ms -- ELM on D-alpha: delta = 0.084 ms
+SXR fall - 179.616 ms -- ELM on D-alpha: delta = 0.076 ms
+SXR fall - 183.515 ms -- ELM on D-alpha: delta = 0.085 ms
+SXR fall - 187.453 ms -- ELM on D-alpha: delta = 0.077 ms
+SXR fall - 190.860 ms -- ELM on D-alpha: delta = 0.076 ms
+SXR fall - 194.353 ms -- ELM on D-alpha: delta = 0.090 ms
+SXR fall - 197.513 ms -- No ELM on D-alpha
+SXR fall - 200.390 ms -- No ELM on D-alpha
+SXR fall - 203.185 ms -- No ELM on D-alpha
+SXR fall - 206.766 ms -- ELM on D-alpha: delta = 0.060 ms
+SXR fall - 210.202 ms -- ELM on D-alpha: delta = 0.060 ms
+SXR fall - 213.829 ms -- ELM on D-alpha: delta = 0.073 ms
+SXR fall - 217.327 ms -- ELM on D-alpha: delta = 0.090 ms
+SXR fall - 220.799 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 224.268 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 227.377 ms -- No ELM on D-alpha
+SXR fall - 230.509 ms -- ELM on D-alpha: delta = 0.051 ms
+SXR fall - 234.013 ms -- No ELM on D-alpha
+SXR fall - 236.761 ms -- No ELM on D-alpha
+SXR fall - 239.479 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 242.044 ms -- ELM on D-alpha: delta = 0.147 ms
+SXR fall - 244.575 ms -- No ELM on D-alpha
+SXR fall - 248.183 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 248.379 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.057 ms, std = 0.061
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 8
+SXR info: diff_quantile = 0.000098, diff_std = 0.002334
+SXR diff_std_top_edge: 1.444 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44199
+SXR falls: 22
+-----
+SXR fall - 163.819 ms -- No ELM on D-alpha
+SXR fall - 163.919 ms -- No ELM on D-alpha
+SXR fall - 176.551 ms -- ELM on D-alpha: delta = 0.014 ms
+SXR fall - 181.604 ms -- ELM on D-alpha: delta = 0.080 ms
+SXR fall - 187.434 ms -- ELM on D-alpha: delta = 0.018 ms
+SXR fall - 191.776 ms -- ELM on D-alpha: delta = 0.079 ms
+SXR fall - 196.050 ms -- ELM on D-alpha: delta = 0.067 ms
+SXR fall - 200.596 ms -- ELM on D-alpha: delta = 0.069 ms
+SXR fall - 205.683 ms -- ELM on D-alpha: delta = 0.065 ms
+SXR fall - 210.950 ms -- ELM on D-alpha: delta = 0.078 ms
+SXR fall - 215.394 ms -- ELM on D-alpha: delta = -0.088 ms
+SXR fall - 219.573 ms -- ELM on D-alpha: delta = 0.055 ms
+SXR fall - 223.682 ms -- ELM on D-alpha: delta = -0.041 ms
+SXR fall - 228.195 ms -- ELM on D-alpha: delta = 0.028 ms
+SXR fall - 232.443 ms -- ELM on D-alpha: delta = 0.052 ms
+SXR fall - 236.687 ms -- ELM on D-alpha: delta = 0.047 ms
+SXR fall - 241.298 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 244.016 ms -- ELM on D-alpha: delta = 0.059 ms
+SXR fall - 246.321 ms -- ELM on D-alpha: delta = 0.074 ms
+SXR fall - 248.761 ms -- No ELM on D-alpha
+SXR fall - 251.122 ms -- ELM on D-alpha: delta = 0.055 ms
+SXR fall - 251.725 ms -- ELM on D-alpha: delta = -0.062 ms
+-----
+Deltas info: mean = 0.029 ms, std = 0.057
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 3
+SXR info: diff_quantile = 0.000093, diff_std = 0.001722
+SXR diff_std_top_edge: 2.430 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44207
+SXR falls: 25
+-----
+SXR fall - 156.659 ms -- ELM on D-alpha: delta = 0.043 ms
+SXR fall - 160.222 ms -- No ELM on D-alpha
+SXR fall - 163.827 ms -- ELM on D-alpha: delta = 0.043 ms
+SXR fall - 167.460 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 170.897 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 173.692 ms -- No ELM on D-alpha
+SXR fall - 179.094 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 181.898 ms -- ELM on D-alpha: delta = 0.021 ms
+SXR fall - 184.867 ms -- ELM on D-alpha: delta = 0.032 ms
+SXR fall - 187.523 ms -- ELM on D-alpha: delta = 0.063 ms
+SXR fall - 190.505 ms -- ELM on D-alpha: delta = -0.005 ms
+SXR fall - 193.181 ms -- ELM on D-alpha: delta = -0.016 ms
+SXR fall - 195.990 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 198.846 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 201.926 ms -- ELM on D-alpha: delta = -0.036 ms
+SXR fall - 204.871 ms -- ELM on D-alpha: delta = 0.055 ms
+SXR fall - 208.329 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 211.191 ms -- ELM on D-alpha: delta = 0.013 ms
+SXR fall - 213.657 ms -- ELM on D-alpha: delta = 0.042 ms
+SXR fall - 215.956 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 218.211 ms -- No ELM on D-alpha
+SXR fall - 220.545 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 222.473 ms -- ELM on D-alpha: delta = 0.018 ms
+SXR fall - 224.586 ms -- No ELM on D-alpha
+SXR fall - 226.626 ms -- ELM on D-alpha: delta = -0.006 ms
+-----
+Deltas info: mean = 0.019 ms, std = 0.036
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 4
+SXR info: diff_quantile = 0.000076, diff_std = 0.001069
+SXR diff_std_top_edge: 4.234 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44347
+SXR falls: 22
+-----
+SXR fall - 151.321 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 154.173 ms -- No ELM on D-alpha
+SXR fall - 157.653 ms -- ELM on D-alpha: delta = 0.036 ms
+SXR fall - 164.681 ms -- ELM on D-alpha: delta = 0.054 ms
+SXR fall - 167.334 ms -- ELM on D-alpha: delta = -0.042 ms
+SXR fall - 170.570 ms -- ELM on D-alpha: delta = -0.073 ms
+SXR fall - 174.063 ms -- ELM on D-alpha: delta = 0.009 ms
+SXR fall - 177.358 ms -- ELM on D-alpha: delta = 0.037 ms
+SXR fall - 179.822 ms -- ELM on D-alpha: delta = 0.013 ms
+SXR fall - 183.144 ms -- ELM on D-alpha: delta = 0.034 ms
+SXR fall - 186.880 ms -- ELM on D-alpha: delta = 0.051 ms
+SXR fall - 190.244 ms -- ELM on D-alpha: delta = 0.033 ms
+SXR fall - 193.313 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 196.845 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 200.826 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 203.778 ms -- ELM on D-alpha: delta = 0.034 ms
+SXR fall - 206.901 ms -- ELM on D-alpha: delta = 0.030 ms
+SXR fall - 209.963 ms -- ELM on D-alpha: delta = 0.043 ms
+SXR fall - 212.032 ms -- ELM on D-alpha: delta = 0.012 ms
+SXR fall - 214.047 ms -- ELM on D-alpha: delta = 0.013 ms
+SXR fall - 216.273 ms -- ELM on D-alpha: delta = 0.009 ms
+SXR fall - 218.685 ms -- ELM on D-alpha: delta = -0.005 ms
+-----
+Deltas info: mean = 0.014 ms, std = 0.039
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 1
+SXR info: diff_quantile = 0.000077, diff_std = 0.001604
+SXR diff_std_top_edge: 2.687 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44348
+SXR falls: 21
+-----
+SXR fall - 149.797 ms -- ELM on D-alpha: delta = 0.090 ms
+SXR fall - 157.100 ms -- ELM on D-alpha: delta = 0.034 ms
+SXR fall - 161.197 ms -- ELM on D-alpha: delta = 0.046 ms
+SXR fall - 164.691 ms -- ELM on D-alpha: delta = -0.004 ms
+SXR fall - 168.159 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 171.729 ms -- ELM on D-alpha: delta = 0.047 ms
+SXR fall - 175.608 ms -- ELM on D-alpha: delta = 0.034 ms
+SXR fall - 179.168 ms -- ELM on D-alpha: delta = -0.028 ms
+SXR fall - 182.759 ms -- ELM on D-alpha: delta = 0.011 ms
+SXR fall - 186.240 ms -- ELM on D-alpha: delta = 0.021 ms
+SXR fall - 189.843 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 193.180 ms -- ELM on D-alpha: delta = 0.036 ms
+SXR fall - 196.525 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 199.651 ms -- ELM on D-alpha: delta = 0.051 ms
+SXR fall - 202.812 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 206.276 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 209.324 ms -- ELM on D-alpha: delta = 0.064 ms
+SXR fall - 211.956 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 214.525 ms -- ELM on D-alpha: delta = 0.011 ms
+SXR fall - 216.814 ms -- ELM on D-alpha: delta = 0.007 ms
+SXR fall - 219.079 ms -- ELM on D-alpha: delta = -0.013 ms
+-----
+Deltas info: mean = 0.029 ms, std = 0.026
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 0
+SXR info: diff_quantile = 0.000077, diff_std = 0.001542
+SXR diff_std_top_edge: 2.831 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44350
+SXR falls: 19
+-----
+SXR fall - 157.679 ms -- ELM on D-alpha: delta = 0.018 ms
+SXR fall - 161.817 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 167.346 ms -- ELM on D-alpha: delta = 0.013 ms
+SXR fall - 171.116 ms -- ELM on D-alpha: delta = 0.003 ms
+SXR fall - 174.632 ms -- ELM on D-alpha: delta = -0.077 ms
+SXR fall - 178.038 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 181.268 ms -- ELM on D-alpha: delta = 0.021 ms
+SXR fall - 184.749 ms -- ELM on D-alpha: delta = 0.042 ms
+SXR fall - 188.205 ms -- ELM on D-alpha: delta = 0.015 ms
+SXR fall - 191.571 ms -- ELM on D-alpha: delta = 0.073 ms
+SXR fall - 194.827 ms -- ELM on D-alpha: delta = 0.019 ms
+SXR fall - 197.481 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 200.967 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 204.235 ms -- ELM on D-alpha: delta = 0.022 ms
+SXR fall - 207.645 ms -- ELM on D-alpha: delta = 0.008 ms
+SXR fall - 210.684 ms -- ELM on D-alpha: delta = 0.021 ms
+SXR fall - 213.379 ms -- ELM on D-alpha: delta = 0.004 ms
+SXR fall - 215.473 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 217.857 ms -- ELM on D-alpha: delta = -0.020 ms
+-----
+Deltas info: mean = 0.010 ms, std = 0.038
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 0
+SXR info: diff_quantile = 0.000078, diff_std = 0.001231
+SXR diff_std_top_edge: 3.687 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44351
+SXR falls: 17
+-----
+SXR fall - 160.073 ms -- ELM on D-alpha: delta = 0.046 ms
+SXR fall - 163.531 ms -- ELM on D-alpha: delta = 0.006 ms
+SXR fall - 167.120 ms -- ELM on D-alpha: delta = -0.100 ms
+SXR fall - 174.514 ms -- ELM on D-alpha: delta = 0.044 ms
+SXR fall - 177.395 ms -- ELM on D-alpha: delta = 0.050 ms
+SXR fall - 180.765 ms -- ELM on D-alpha: delta = 0.036 ms
+SXR fall - 184.798 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 188.162 ms -- ELM on D-alpha: delta = 0.023 ms
+SXR fall - 191.529 ms -- ELM on D-alpha: delta = 0.040 ms
+SXR fall - 194.527 ms -- ELM on D-alpha: delta = -0.079 ms
+SXR fall - 197.896 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 201.302 ms -- ELM on D-alpha: delta = 0.012 ms
+SXR fall - 204.385 ms -- ELM on D-alpha: delta = 0.028 ms
+SXR fall - 207.903 ms -- ELM on D-alpha: delta = 0.030 ms
+SXR fall - 211.624 ms -- ELM on D-alpha: delta = 0.001 ms
+SXR fall - 216.295 ms -- ELM on D-alpha: delta = -0.003 ms
+SXR fall - 221.955 ms -- ELM on D-alpha: delta = -0.025 ms
+-----
+Deltas info: mean = 0.010 ms, std = 0.041
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 0
+SXR info: diff_quantile = 0.000077, diff_std = 0.001310
+SXR diff_std_top_edge: 3.450 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44352
+SXR falls: 20
+-----
+SXR fall - 157.454 ms -- ELM on D-alpha: delta = 0.020 ms
+SXR fall - 162.323 ms -- ELM on D-alpha: delta = 0.026 ms
+SXR fall - 165.859 ms -- ELM on D-alpha: delta = 0.041 ms
+SXR fall - 169.247 ms -- ELM on D-alpha: delta = 0.045 ms
+SXR fall - 172.649 ms -- ELM on D-alpha: delta = -0.007 ms
+SXR fall - 175.808 ms -- ELM on D-alpha: delta = 0.033 ms
+SXR fall - 179.023 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 182.886 ms -- ELM on D-alpha: delta = 0.037 ms
+SXR fall - 186.492 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 190.189 ms -- ELM on D-alpha: delta = 0.012 ms
+SXR fall - 193.654 ms -- ELM on D-alpha: delta = 0.050 ms
+SXR fall - 196.932 ms -- ELM on D-alpha: delta = 0.036 ms
+SXR fall - 200.456 ms -- ELM on D-alpha: delta = -0.069 ms
+SXR fall - 203.498 ms -- ELM on D-alpha: delta = 0.035 ms
+SXR fall - 207.019 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 209.397 ms -- ELM on D-alpha: delta = 0.054 ms
+SXR fall - 211.737 ms -- ELM on D-alpha: delta = 0.031 ms
+SXR fall - 214.109 ms -- ELM on D-alpha: delta = -0.002 ms
+SXR fall - 216.302 ms -- ELM on D-alpha: delta = 0.017 ms
+SXR fall - 219.949 ms -- No ELM on D-alpha
+-----
+Deltas info: mean = 0.024 ms, std = 0.027
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 1
+SXR info: diff_quantile = 0.000077, diff_std = 0.001132
+SXR diff_std_top_edge: 4.013 (approximate w/ a*exp^b)
+
+----------------
+Signal sht44355
+SXR falls: 14
+-----
+SXR fall - 160.638 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 164.587 ms -- ELM on D-alpha: delta = 0.018 ms
+SXR fall - 168.048 ms -- ELM on D-alpha: delta = 0.038 ms
+SXR fall - 174.871 ms -- ELM on D-alpha: delta = 0.024 ms
+SXR fall - 178.030 ms -- ELM on D-alpha: delta = 0.058 ms
+SXR fall - 190.942 ms -- ELM on D-alpha: delta = 0.039 ms
+SXR fall - 194.010 ms -- ELM on D-alpha: delta = -0.026 ms
+SXR fall - 196.864 ms -- ELM on D-alpha: delta = -0.020 ms
+SXR fall - 199.606 ms -- ELM on D-alpha: delta = 0.002 ms
+SXR fall - 202.261 ms -- ELM on D-alpha: delta = 0.029 ms
+SXR fall - 205.629 ms -- ELM on D-alpha: delta = 0.027 ms
+SXR fall - 208.867 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 211.115 ms -- ELM on D-alpha: delta = 0.025 ms
+SXR fall - 213.599 ms -- ELM on D-alpha: delta = 0.099 ms
+-----
+Deltas info: mean = 0.028 ms, std = 0.031
+SXR falls w/o sync ELM in nearest area (-0.1 ms; 1.5 ms): 0
+SXR info: diff_quantile = 0.000071, diff_std = 0.000839
+SXR diff_std_top_edge: 5.146 (approximate w/ a*exp^b)
