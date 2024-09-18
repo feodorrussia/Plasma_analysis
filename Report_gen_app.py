@@ -3,6 +3,7 @@ from scipy import signal
 import copy
 import sys
 import os
+import matplotlib.pyplot as plt
 
 from source.Files_operating import read_sht_data
 
@@ -318,67 +319,117 @@ def init_app(filename, dir_path, report_filename=""):
     # logg 5
     print("-", end="")
     
-    sxr_slices = get_slices(mark_sxr)
-    deltas_da = np.zeros(len(sxr_slices))
-    deltas_mgd = np.zeros(len(sxr_slices))
-    amplitudes_mgd = np.zeros(len(sxr_slices))
-    # logg 6
-    print("-", end="")
-
+    sxr_slices = [Slice(0, 0)] + get_slices(mark_sxr)
+    deltas_sync_elm = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    count_desync_elm = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    deltas_desync_elm = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    amplitudes_sync_mgd = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    deltas_sync_mgd = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    amplitudes_desync_mgd = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    deltas_desync_mgd = np.full(shape=len(sxr_slices), fill_value=np.nan)
+    
     report_lines = []
     
     report_lines.append("\n----------------\n")
     report_lines.append(f"Signal {filename}\n")
-    report_lines.append(f"SXR falls: {len(sxr_slices)}\n")
+    report_lines.append(f"SXR falls: {len(sxr_slices) - 1}\n")
     report_lines.append("-----\n")
     l_shift, r_shift = 100, 1500
+    # logg 6
+    print("-", end="")
     
-    for sl_i in range(len(sxr_slices)):
+    for sl_i in range(1, len(sxr_slices)):
         sxr_pointer = np.argmin(sxr_f[sxr_slices[sl_i].l: sxr_slices[sl_i].r]) + sxr_slices[sl_i].l
         
-        da_slices = get_slices(mark_d_alpha[min(sxr_slices[sl_i].l - l_shift, mark_d_alpha.shape[0]): min(sxr_slices[sl_i].r + r_shift, mark_d_alpha.shape[0])])
+        da_slices = get_slices(mark_d_alpha[sxr_slices[sl_i - 1].r: min(sxr_slices[sl_i].r + r_shift, mark_d_alpha.shape[0])])
         mgd_slice = sxr_slices[sl_i].copy()
         mgd_slice.expand(l_shift)
     
-        deltas_mgd[sl_i] = (np.argmax(mgd[mgd_slice.l: mgd_slice.r]) + mgd_slice.l - sxr_pointer) / 1e3
-        amplitudes_mgd[sl_i] = abs(mgd[mgd_slice.l: mgd_slice.r].max() - mgd.mean())
-        if deltas_mgd[sl_i] >= 0.4:
-            deltas_mgd[sl_i] = np.nan
-            mgd_info = f"-- No nearest peaks on MGD"
+        deltas_sync_mgd[sl_i - 1] = (np.argmax(mgd[mgd_slice.l: mgd_slice.r]) + mgd_slice.l - sxr_pointer) / 1e3
+        amplitudes_sync_mgd[sl_i - 1] = abs(mgd[mgd_slice.l: mgd_slice.r].max() - mgd.mean())
+        
+        if deltas_sync_mgd[sl_i - 1] >= 0.5:
+            deltas_sync_mgd[sl_i - 1] = np.nan
+            sync_mgd_info = f"-- No nearest peaks on MGD"
         else:
-            mgd_info = f"-- MGD peak: delta = {deltas_mgd[sl_i]:3.3f} ms, amplitude = {amplitudes_mgd[sl_i]:3.3f}"
+            sync_mgd_info = f"-- MGD peak: delta = {deltas_sync_mgd[sl_i - 1]:3.3f} ms, amplitude = {amplitudes_sync_mgd[sl_i - 1]:3.3f}"
     
         if len(da_slices) == 0:
-            deltas_da[sl_i] = np.nan
-            da_info = f"-- No sync ELM on D-alpha" + " " * 15
+            deltas_sync_elm[sl_i - 1] = np.nan
+            sync_elm_info = f"-- No sync ELM on D-alpha"
+            desync_elm_info = f"-- No desync ELM on D-alpha"  # + " " * 15
         else:
             ind = 0
-            while sxr_slices[sl_i].r - (da_slices[ind].r + sxr_slices[sl_i].l - l_shift) > 0 and ind + 1 < len(da_slices):
+            while sxr_slices[sl_i].r - (da_slices[ind].r + sxr_slices[sl_i - 1].l - l_shift) > 0 and ind + 1 < len(da_slices):
                 ind += 1
+    
+            sync_elm_slice = da_slices[ind].copy()
+            sync_elm_slice.move(sxr_slices[sl_i - 1].l)
+            deltas_sync_elm[sl_i - 1] = (np.argmax(d_alpha_f[sync_elm_slice.l: sync_elm_slice.r]) + sync_elm_slice.l - sxr_pointer) / 1e3
             
-            deltas_da[sl_i] = (da_slices[ind].l - l_shift) / 1e3
-            
-            if deltas_da[sl_i] >= 0.4:
-                deltas_da[sl_i] = np.nan
-                da_info = f"-- No sync ELM on D-alpha" + " " * 15
+            if deltas_sync_elm[sl_i - 1] >= 0.5:  #  or deltas_sync_elm[sl_i] < - l_shift / 1e3
+                deltas_sync_elm[sl_i - 1] = np.nan
+                sync_elm_info = f"-- No sync ELM on D-alpha"
             else:
-                da_info = f"-- Sync ELM on D-alpha: delta = {deltas_da[sl_i]:3.3f} ms"
+                sync_elm_info = f"-- Sync ELM: d = {deltas_sync_elm[sl_i - 1]:3.3f} ms"
+    
+            if ind - 1 <= 0:
+                count_desync_elm[sl_i - 1] = np.nan
+                desync_elm_info = f"-- No desync ELM on D-alpha"  # + " " * 15
+                desync_mgd_info = ""
+            else:
+                count_desync_elm[sl_i - 1] = ind - 1
+                
+                cur_deltas_desync_elm = np.zeros(int(count_desync_elm[sl_i - 1] - 1))
+                cur_desync_mgd_amplitude = np.zeros(int(count_desync_elm[sl_i - 1]))
+                cur_desync_mgd_deltas = np.zeros(int(count_desync_elm[sl_i - 1]))
+    
+                prev_argmax = np.argmax(d_alpha_f[da_slices[1].l: da_slices[1].r]) + da_slices[1].l
+                
+                cur_desync_mgd_amplitude[0] = abs(mgd[da_slices[1].l - 10: da_slices[1].r + 10].max() - mgd.mean())
+                cur_desync_mgd_deltas[0] = (np.argmax(mgd[da_slices[1].l - 10: da_slices[1].r + 10]) + da_slices[1].l - 10 - prev_argmax) / 1e3
+                
+                for elm_ind in range(1, ind - 1):
+                    cur_argmax = np.argmax(d_alpha_f[da_slices[elm_ind].l: da_slices[elm_ind].r]) + da_slices[elm_ind].l
+                    cur_deltas_desync_elm[elm_ind - 1] = (cur_argmax - prev_argmax) / 1e3
+                    
+                    cur_desync_mgd_amplitude[elm_ind] = abs(mgd[da_slices[elm_ind].l - 100: da_slices[elm_ind].r + 100].max() - mgd.mean())
+                    cur_desync_mgd_deltas[elm_ind] = (np.argmax(mgd[da_slices[elm_ind].l - 100: da_slices[elm_ind].r + 100]) + da_slices[elm_ind].l - 100 - cur_argmax) / 1e3
+                    
+                    prev_argmax = cur_argmax
+    
+                deltas_desync_elm[sl_i - 1] = cur_deltas_desync_elm.mean() if count_desync_elm[sl_i - 1] - 1 > 0 else np.nan
+                amplitudes_desync_mgd[sl_i - 1] = np.nanmean(cur_desync_mgd_amplitude)
+                deltas_desync_mgd[sl_i - 1] = np.nanmean(cur_desync_mgd_deltas)
+                desync_elm_info = f"-- Desync ELM: count = {count_desync_elm[sl_i - 1]}"
+                if count_desync_elm[sl_i - 1] > 1 and cur_deltas_desync_elm.mean() > 1e-6:
+                    desync_elm_info += f", fr mean = {1 / cur_deltas_desync_elm.mean():3.3f} kGz, fr std = {cur_deltas_desync_elm.std() / (cur_deltas_desync_elm.mean() ** 2):3.3f} kGz"  # d mean = {desync_elm_deltas.mean():3.3f}, d std = {desync_elm_deltas.std():3.3f} ms, 
+                else:
+                    desync_elm_info += f", fr mean = nan kGz, fr std = nan kGz"
+                desync_mgd_info = f"-- MGD peaks: deltas mean = {cur_desync_mgd_deltas.mean():3.3f} ms, deltas std = {cur_desync_mgd_deltas.std():3.3f} ms, "
+                desync_mgd_info += f"A mean = {cur_desync_mgd_amplitude.mean():6.6f}, A std = {cur_desync_mgd_amplitude.std():6.6f}"
+            
         
-        report_lines.append(f"SXR fall - {sxr_pointer / 1e3:3.3f} ms {da_info} {mgd_info}\n")
+        report_lines.append(f"{sl_i}. SXR fall - {sxr_pointer / 1e3:3.3f} ms {sync_elm_info}\n\t{sync_mgd_info}\n\t{desync_elm_info}\n\t{desync_mgd_info}\n")
+    
     # logg 8
     print("-", end="")
     
     
     report_lines.append("-----\n")
-    report_lines.append(f"Sync ELM deltas info: mean = {np.nanmean(deltas_da):.3f} ms, std = {np.nanstd(deltas_da):.3f}\n")
-    report_lines.append(f"MGD peaks deltas info: mean = {np.nanmean(deltas_mgd):.3f} ms, std = {np.nanstd(deltas_mgd):.3f}\n")
-    report_lines.append(f"MGD peaks amplitudes info: mean = {np.nanmean(amplitudes_mgd):.3f} ms, std = {np.nanstd(amplitudes_mgd):.3f}\n")
+    report_lines.append(f"Sync ELM info: deltas mean = {np.nanmean(deltas_sync_elm):.3f} ms, deltas std = {np.nanstd(deltas_sync_elm):.3f} ms\n")
+    report_lines.append(f"Desync ELM info: count mean = {np.nanmean(count_desync_elm[1:]):.3f}, count std = {np.nanstd(count_desync_elm[1:]):.3f}, " +
+                        f"frequency mean = {1 / np.nanmean(deltas_desync_elm):.3f} ms, frequency std = {np.nanstd(deltas_desync_elm) / (np.nanmean(deltas_desync_elm) ** 2):.3f}\n")
+    report_lines.append(f"MGD peaks info (sync ELM): deltas mean = {np.nanmean(deltas_sync_mgd):.3f} ms, deltas std = {np.nanstd(deltas_sync_mgd):.3f} ms, " +
+                        f"A mean = {np.nanmean(amplitudes_sync_mgd):.3f}, A std = {np.nanstd(amplitudes_sync_mgd):.3f}\n")
+    report_lines.append(f"MGD peaks info (desync ELM): deltas mean = {np.nanmean(deltas_desync_mgd[1:]):.3f} ms, " +
+                        f"A mean = {np.nanmean(amplitudes_desync_mgd[1:]):.3f}\n")
     report_lines.append("-----\n")
-    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_da))}\n")
-    report_lines.append(f"SXR falls w/o peaks on MGD in nearest area (-{l_shift * 1e-3} ms; {l_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_mgd))}\n")
+    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_sync_elm))}\n")
+    report_lines.append(f"SXR falls w/o peaks on MGD in nearest area (-{l_shift * 1e-3} ms; {l_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_sync_mgd))}\n")
     report_lines.append("-----\n")
-    report_lines.append(f"SXR info: diff_quantile = {meta_sxr.d_q:.6f}, diff_std = {meta_sxr.d_std:.6f}\n")
-    report_lines.append(f"MGD info: mean = {mgd.mean():.6f}, std = {mgd.std():.6f}\n")
+    report_lines.append(f"SXR signal info: diff_quantile = {meta_sxr.d_q:.6f}, diff_std = {meta_sxr.d_std:.6f}\n")
+    report_lines.append(f"MGD signal info: mean = {mgd.mean():.6f}, std = {mgd.std():.6f}\n")
     report_lines.append("-----\n")
     report_lines.append(f"SXR diff_std_top_edge: {meta_sxr.d_std_bottom:.3f} (approximate w/ a*exp^b)\n")
     report_lines.append("----------------\n")
@@ -393,7 +444,18 @@ def init_app(filename, dir_path, report_filename=""):
     # logg 10
     print("-|", end="")
     print(f" - signal (sxr: d_q={meta_sxr.d_q:.6f}, d_std={meta_sxr.d_std:.6f}, d_std_top_edge={meta_sxr.d_std_bottom:.3f})", end="")
-    print(f" - w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas_da))} (m={np.nanmean(deltas_da):.3f}, std={np.nanstd(deltas_da):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas_da))}")
+    print(f" - w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas_sync_elm))} (m={np.nanmean(deltas_sync_elm):.3f}, std={np.nanstd(deltas_sync_elm):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas_sync_elm))}")
+
+    return [
+        deltas_sync_elm,
+        deltas_sync_mgd,
+        amplitudes_sync_mgd,
+        count_desync_elm,
+        deltas_desync_elm,
+        deltas_desync_mgd,
+        amplitudes_desync_mgd,
+    ]
+    
 
 if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     # get args from CL
@@ -405,10 +467,37 @@ if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     with open(report_path, "w") as file:
         file.write("The sync ELMs delta was considered relative to the peaks of the first diff values on SXR & D-alpha.\n" +
                    "The MGD peaks delta was considered relative to the peaks of the absolute MGD values & first diff values on SXR (vert^2 + rad^2).\n")
-    
+
+    data = []
+    labels = []
     for f_name in os.listdir(sys.argv[1]):
         print(f"Process {f_name} - |", end="")
-        init_app(f_name[:-4], sys.argv[1], sys.argv[2])
+        data.append(init_app(f_name[:-4], sys.argv[1], sys.argv[2]))
+        labels.append(f_name)
+
+    titles = ['sELM/SXR deltas', 'MGD/sELM deltas', 'MGD/sELM peaks A', 'Desync ELM count', 'dsELM fr', 'MGD/dsELM deltas', 'MGD/dsELM peaks A']
+
+    n_rows=len(data[0])
+    fig, axs = plt.subplots(nrows=n_rows)
+    
+    fig.set_figwidth(16)
+    fig.set_figheight(n_rows * 4)
+    
+    for i in range(n_rows):
+        axs[i].set_ylabel(titles[i])
+        deltas_data = []
+        
+        for data_set in data:
+            if titles[i] == 'dsELM fr':
+                data_arr = (1 / data_set[i][np.nonzero(data_set[i])])
+            else:
+                data_arr = data_set[i]
+            deltas_data.append(data_arr[~ np.isnan(data_arr)])
+            
+        bplot = axs[i].boxplot(deltas_data,
+                           labels=labels)
+    
+    plt.savefig(f"C:/Users/f.belous/Work/Projects/Plasma_analysis/img/boxplots/{sys.argv[2][-13:-4]}_boxplot.png")
 
 else:
     print("Program is supposed to run out from command line.")
