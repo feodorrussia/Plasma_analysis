@@ -26,10 +26,10 @@ class Slice:
     def set_mark(self, mark: int) -> None:
         self.mark = mark
 
-    def copy(self, other):
-        self.l = other.l
-        self.r = other.r
-        self.mark = other.mark
+    def copy(self):
+        new_slice = Slice(self.l, self.r)
+        new_slice.set_mark(new_slice.mark)
+        return new_slice
 
     def check_length(self, len_edge: int) -> bool:
         return self.r - self.l > len_edge
@@ -197,7 +197,7 @@ def proc_slices(mark_data: np.array, data: np.array, data_diff: np.array, meta: 
     res_mark = np.copy(mark_data)
     res_mark[cur_slice.l: cur_slice.r] = 0.0
     cur_slice.collapse_boarders()
-    proc_slice.copy(cur_slice)
+    proc_slice = cur_slice.copy()
 
     c = 0
     
@@ -235,13 +235,13 @@ def proc_slices(mark_data: np.array, data: np.array, data_diff: np.array, meta: 
                 res_mark[proc_slice.l: proc_slice.r] = proc_slice.mark
                 c += proc_slice.mark
                 
-                proc_slice.copy(cur_slice)
+                proc_slice = cur_slice.copy()
             f_fragment = False
             cur_slice.collapse_boarders()
         elif not f_fragment:
             cur_slice.collapse_boarders()
             if proc_slice.is_null():
-                proc_slice.copy(cur_slice)
+                proc_slice = cur_slice.copy()
     
         cur_slice.step()
     # print(c)
@@ -276,6 +276,10 @@ def init_app(filename, dir_path, report_filename=""):
     # logg 1
     print("-", end="")
     df["sxr"] = read_sht_data(filename, dir_path, data_name="SXR 50 mkm").ch1
+    # mgd_data_vertical
+    df["mgd_v"] = read_sht_data(filename, dir_path, data_name="МГД быстрый зонд верт.").ch1
+    # mgd_data_radial
+    df["mgd_r"] = read_sht_data(filename, dir_path, data_name="МГД быстрый зонд рад.").ch1
     # logg 2
     print("-", end="")
     
@@ -289,6 +293,8 @@ def init_app(filename, dir_path, report_filename=""):
     b, a = signal.butter(5, 0.05)
     d_alpha_f = signal.filtfilt(b, a, d_alpha_d1)
     sxr_f = signal.filtfilt(b, a, sxr_d1)
+
+    mgd = df.mgd_v.to_numpy() ** 2 + df.mgd_r.to_numpy() ** 2
     # logg 3
     print("-", end="")
     
@@ -313,7 +319,9 @@ def init_app(filename, dir_path, report_filename=""):
     print("-", end="")
     
     sxr_slices = get_slices(mark_sxr)
-    deltas = np.zeros(len(sxr_slices))
+    deltas_da = np.zeros(len(sxr_slices))
+    deltas_mgd = np.zeros(len(sxr_slices))
+    amplitudes_mgd = np.zeros(len(sxr_slices))
     # logg 6
     print("-", end="")
 
@@ -326,32 +334,54 @@ def init_app(filename, dir_path, report_filename=""):
     l_shift, r_shift = 100, 1500
     
     for sl_i in range(len(sxr_slices)):
+        sxr_pointer = np.argmin(sxr_f[sxr_slices[sl_i].l: sxr_slices[sl_i].r]) + sxr_slices[sl_i].l
+        
         da_slices = get_slices(mark_d_alpha[min(sxr_slices[sl_i].l - l_shift, mark_d_alpha.shape[0]): min(sxr_slices[sl_i].r + r_shift, mark_d_alpha.shape[0])])
+        mgd_slice = sxr_slices[sl_i].copy()
+        mgd_slice.expand(l_shift)
+    
+        deltas_mgd[sl_i] = (np.argmax(mgd[mgd_slice.l: mgd_slice.r]) + mgd_slice.l - sxr_pointer) / 1e3
+        amplitudes_mgd[sl_i] = abs(mgd[mgd_slice.l: mgd_slice.r].max() - mgd.mean())
+        if deltas_mgd[sl_i] >= 0.4:
+            deltas_mgd[sl_i] = np.nan
+            mgd_info = f"-- No nearest peaks on MGD"
+        else:
+            mgd_info = f"-- MGD peak: delta = {deltas_mgd[sl_i]:3.3f} ms, amplitude = {amplitudes_mgd[sl_i]:3.3f}"
     
         if len(da_slices) == 0:
-            deltas[sl_i] = np.nan
-            report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- No ELM on D-alpha\n")
+            deltas_da[sl_i] = np.nan
+            da_info = f"-- No sync ELM on D-alpha" + " " * 15
         else:
             ind = 0
             while sxr_slices[sl_i].r - (da_slices[ind].r + sxr_slices[sl_i].l - l_shift) > 0 and ind + 1 < len(da_slices):
                 ind += 1
             
-            deltas[sl_i] = (da_slices[ind].l - l_shift) / 1e3
+            deltas_da[sl_i] = (da_slices[ind].l - l_shift) / 1e3
             
-            if deltas[sl_i] > 0.4:
-                deltas[sl_i] = np.nan
-                report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- No ELM on D-alpha\n")
-                continue
-            report_lines.append(f"SXR fall - {(((sxr_slices[sl_i].r - sxr_slices[sl_i].l) // 2 + sxr_slices[sl_i].l) / 1e3):3.3f} ms -- ELM on D-alpha: delta = {deltas[sl_i]:3.3f} ms\n")
+            if deltas_da[sl_i] >= 0.4:
+                deltas_da[sl_i] = np.nan
+                da_info = f"-- No sync ELM on D-alpha" + " " * 15
+            else:
+                da_info = f"-- Sync ELM on D-alpha: delta = {deltas_da[sl_i]:3.3f} ms"
+        
+        report_lines.append(f"SXR fall - {sxr_pointer / 1e3:3.3f} ms {da_info} {mgd_info}\n")
     # logg 8
     print("-", end="")
     
     
     report_lines.append("-----\n")
-    report_lines.append(f"Deltas info: mean = {np.nanmean(deltas):.3f} ms, std = {np.nanstd(deltas):.3f}\n")
-    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas))}\n")
+    report_lines.append(f"Sync ELM deltas info: mean = {np.nanmean(deltas_da):.3f} ms, std = {np.nanstd(deltas_da):.3f}\n")
+    report_lines.append(f"MGD peaks deltas info: mean = {np.nanmean(deltas_mgd):.3f} ms, std = {np.nanstd(deltas_mgd):.3f}\n")
+    report_lines.append(f"MGD peaks amplitudes info: mean = {np.nanmean(amplitudes_mgd):.3f} ms, std = {np.nanstd(amplitudes_mgd):.3f}\n")
+    report_lines.append("-----\n")
+    report_lines.append(f"SXR falls w/o sync ELM in nearest area (-{l_shift * 1e-3} ms; {r_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_da))}\n")
+    report_lines.append(f"SXR falls w/o peaks on MGD in nearest area (-{l_shift * 1e-3} ms; {l_shift * 1e-3} ms): {np.count_nonzero(np.isnan(deltas_mgd))}\n")
+    report_lines.append("-----\n")
     report_lines.append(f"SXR info: diff_quantile = {meta_sxr.d_q:.6f}, diff_std = {meta_sxr.d_std:.6f}\n")
+    report_lines.append(f"MGD info: mean = {mgd.mean():.6f}, std = {mgd.std():.6f}\n")
+    report_lines.append("-----\n")
     report_lines.append(f"SXR diff_std_top_edge: {meta_sxr.d_std_bottom:.3f} (approximate w/ a*exp^b)\n")
+    report_lines.append("----------------\n")
     # logg 9
     print("-", end="")
 
@@ -363,12 +393,19 @@ def init_app(filename, dir_path, report_filename=""):
     # logg 10
     print("-|", end="")
     print(f" - signal (sxr: d_q={meta_sxr.d_q:.6f}, d_std={meta_sxr.d_std:.6f}, d_std_top_edge={meta_sxr.d_std_bottom:.3f})", end="")
-    print(f" - w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas))} (m={np.nanmean(deltas):.3f}, std={np.nanstd(deltas):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas))}")
+    print(f" - w/ ELM {len(sxr_slices) - np.count_nonzero(np.isnan(deltas_da))} (m={np.nanmean(deltas_da):.3f}, std={np.nanstd(deltas_da):.3f}) | w/o ELM {np.count_nonzero(np.isnan(deltas_da))}")
 
 if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     # get args from CL
     print("Sys args (dir filepath | name of the report file):\n", sys.argv)
     print("\n----------------")
+
+    report_path = sys.argv[2] if "/" in sys.argv[2] or "\\" in sys.argv[2] else sys.argv[1] + sys.argv[2]
+
+    with open(report_path, "w") as file:
+        file.write("The sync ELMs delta was considered relative to the peaks of the first diff values on SXR & D-alpha.\n" +
+                   "The MGD peaks delta was considered relative to the peaks of the absolute MGD values & first diff values on SXR (vert^2 + rad^2).\n")
+    
     for f_name in os.listdir(sys.argv[1]):
         print(f"Process {f_name} - |", end="")
         init_app(f_name[:-4], sys.argv[1], sys.argv[2])
