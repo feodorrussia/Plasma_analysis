@@ -824,17 +824,17 @@ SXR falls: 23
 	-- No sync ELM on D-alpha
 	-- MGD peak: delta = 0.001 ms, amplitude = 4.921
 	-- No desync ELM on D-alpha
-	-- first MGD > std: deltas(/MGD peaks) mean = 0.000e+00 ms, deltas(/MGD peaks) std = 0.000e+00 ms, A mean = 6.063e-02, A std = 6.063e-02
+	
 18. SXR fall - 243.838 ms - delta = 0.039
 	-- No sync ELM on D-alpha
 	-- MGD peak: delta = -0.014 ms, amplitude = 5.952
 	-- No desync ELM on D-alpha
-	-- first MGD > std: deltas(/MGD peaks) mean = 0.000e+00 ms, deltas(/MGD peaks) std = 0.000e+00 ms, A mean = 6.063e-02, A std = 6.063e-02
+	
 19. SXR fall - 245.581 ms - delta = 0.037
 	-- No sync ELM on D-alpha
 	-- MGD peak: delta = -0.016 ms, amplitude = 2.096
 	-- No desync ELM on D-alpha
-	-- first MGD > std: deltas(/MGD peaks) mean = 0.000e+00 ms, deltas(/MGD peaks) std = 0.000e+00 ms, A mean = 6.063e-02, A std = 6.063e-02
+	
 20. SXR fall - 247.309 ms - delta = 0.04
 	-- Sync ELM: d = 0.004 ms
 	-- MGD peak: delta = -0.024 ms, amplitude = 2.236

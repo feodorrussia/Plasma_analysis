@@ -366,6 +366,7 @@ def init_app(filename, dir_path, report_filename=""):
             deltas_sync_elm[sl_i - 1] = np.nan
             sync_elm_info = f"-- No sync ELM on D-alpha"
             desync_elm_info = f"-- No desync ELM on D-alpha"  # + " " * 15
+            desync_mgd_info = ""
             
             deltas_sync_mgd[sl_i - 1] = (np.argmax(mgd[mgd_slice.l: mgd_slice.r]) + mgd_slice.l - sxr_pointer) / 1e3
             amplitudes_sync_mgd[sl_i - 1] = abs(mgd[mgd_slice.l: mgd_slice.r].max() - mgd.mean())
@@ -544,15 +545,15 @@ if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
     for f_name in os.listdir(sys.argv[1]):
         print(f"Process {f_name} - |", end="")
         data.append(init_app(f_name[:-4], sys.argv[1], sys.argv[2]))
-        labels.append(f_name)
+        labels.append("#" + f_name[-9:-4])
 
     titles = ['SXR d1 peak delta, ms', 'sELM/SXR delta, ms', 'MGD/sELM delta, ms', 'MGD(sELM) peaks A', 'dsELM count', 'dsELM fr, kGz', 'peak MGD/dsELM delta, ms', 'peaks MGD(dsELM) A', 'precur MGD/dsELM delta, ms', 'precur MGD(dsELM) delta delta, ms', 'precur MGD(dsELM) A']
 
     n_rows=len(data[0])
-    fig, axs = plt.subplots(nrows=n_rows)
+    fig, axs = plt.subplots(nrows=n_rows, gridspec_kw={'hspace': 0.25})  # , sharex=True
     
     fig.set_figwidth(16)
-    fig.set_figheight(n_rows * 3 + n_rows // 3)
+    fig.set_figheight(n_rows * 3)
     
     for i in range(n_rows):
         axs[i].set_ylabel(titles[i])
@@ -561,11 +562,21 @@ if __name__ == "__main__" and not (sys.stdin and sys.stdin.isatty()):
         for data_set in data:
             if titles[i] == 'dsELM fr':
                 data_arr = (1 / data_set[i][np.nonzero(data_set[i])])
+            elif titles[i] == 'dsELM count':
+                data_arr = data_set[i]
+                data_arr[data_arr >= np.quantile(data_arr, 0.8)] = np.nan
             else:
                 data_arr = data_set[i]
             deltas_data.append(data_arr[~ np.isnan(data_arr)])
             
         bplot = axs[i].boxplot(deltas_data, labels=labels)
+        
+        if titles[i] == 'sELM/SXR delta, ms':
+            axs[i].axhline(0.156, color="red", linestyle=':', linewidth=0.8)
+            axs[i].axhline(0.156 - 0.072, color="red", linestyle=':', linewidth=0.8)
+            axs[i].axhline(0.156 + 0.072, color="red", linestyle=':', linewidth=0.8)
+        
+        axs[i].set_xticklabels(axs[i].get_xticklabels(), rotation=20)
         axs[i].grid(which='major', color='#DDDDDD', linewidth=0.9)
         axs[i].grid(which='minor', color='#DDDDDD', linestyle=':', linewidth=0.7)
         axs[i].minorticks_on()
